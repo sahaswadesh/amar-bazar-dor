@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173f5f">
+<title>আমার বাজারদর ও ভবিষ্যৎ বিশ্লেষণ</title>
+<style>
+:root{--navy:#102f46;--blue:#246b9a;--teal:#17836f;--bg:#f3f7fa;--ink:#172b3a;--muted:#657b8b;--line:#e2eaf0;--gold:#bd8b32}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;color:var(--ink)}
+button,input{font:inherit}
+.wrap{max-width:1040px;margin:auto;padding:14px}
+.hero{background:linear-gradient(130deg,#102f46 0%,#1b5875 60%,#247d83 100%);color:#fff;border-radius:24px;padding:20px;box-shadow:0 12px 28px #163e5d20;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #ffffff20;border-radius:50%;right:-65px;top:-75px;box-shadow:0 0 0 25px #ffffff08,0 0 0 50px #ffffff06}
+.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px;position:relative;z-index:1}
+.hero h1{font-size:clamp(22px,5vw,31px);line-height:1.35;margin:0 0 6px}
+.hero p{margin:0;color:#d9e9f3;font-size:13px;line-height:1.6}
+.bigicon{font-size:44px;flex:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:17px;position:relative;z-index:1}
+.stat{background:#ffffff17;border:1px solid #ffffff25;border-radius:13px;padding:9px}
+.stat b{display:block;font-size:19px}.stat span{font-size:11px;color:#e2eef5}
+.searchbar{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 13px;margin:15px 0 10px;box-shadow:0 3px 12px #193d5a07}
+.searchbar span{font-size:18px}.searchbar input{width:100%;border:0;outline:0;background:transparent;padding:13px 0;color:var(--ink);font-size:14px}
+.quickrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 16px}
+.quickbtn{border:0;border-radius:14px;padding:13px 12px;text-align:left;color:white;background:linear-gradient(135deg,#17836f,#239a7e);font-weight:750;cursor:pointer;box-shadow:0 4px 12px #17836f20}
+.quickbtn.goldbtn{background:linear-gradient(135deg,#a77725,#d0a44d)}
+.quickbtn small{display:block;font-weight:500;opacity:.9;margin-top:3px;font-size:11px}
+.notice{margin:12px 0;background:#fff8e8;border:1px solid #f1dfb2;color:#70551a;padding:11px 13px;border-radius:13px;font-size:12px;line-height:1.65}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:22px 2px 10px}
+h2{font-size:17px;margin:0}
+.section-head small{font-size:11px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.item{background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px;box-shadow:0 3px 12px #193d5a08;display:flex;flex-direction:column;min-height:190px;position:relative;overflow:hidden}
+.item:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#4b8bd1}
+.item.oil:before{background:#d89a2b}.item.spice:before{background:#3b9a68}.item.rice:before{background:#b18a4b}.item.gold:before{background:#c99b3d}
+.item-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.item .emoji{font-size:27px}
+.item .tag{font-size:10px;background:#eef4f7;color:#587080;border-radius:20px;padding:4px 7px;white-space:nowrap}
+.item h3{font-size:15px;margin:7px 0 4px}
+.item .hint{font-size:11px;line-height:1.5;color:var(--muted);min-height:32px;margin-bottom:10px}
+.item button{border:0;border-radius:10px;background:var(--blue);color:white;padding:10px 8px;font-size:12px;font-weight:750;cursor:pointer}
+.item button.secondary{margin-top:6px;background:#edf3f7;color:#21445f}
+.item button:active,.quickbtn:active{transform:scale(.985)}
+.item button:focus-visible,.quickbtn:focus-visible{outline:3px solid #9bc9f5;outline-offset:2px}
+.features{background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;margin-top:20px}
+.features ul{padding-left:20px;margin:8px 0 0;line-height:1.9;font-size:13px}
+.foot{color:var(--muted);font-size:11px;text-align:center;padding:20px 8px;line-height:1.6}
+.empty{display:none;background:white;border:1px dashed #b8c9d4;padding:20px;text-align:center;border-radius:14px;color:var(--muted);font-size:13px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#173f5f;color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 5px 20px #0002;display:none;max-width:90%;font-size:13px;z-index:10001}
+.report-panel{display:none;position:fixed;inset:0;background:#f3f6fa;z-index:9999;overflow:auto;padding:12px}
+.report-inner{max-width:850px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px;min-height:75vh;box-shadow:0 8px 28px #173f5f20}
+.report-head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.report-head h2{margin:0;font-size:18px}
+.report-close{border:0;background:#eaf1f7;color:#173f5f;border-radius:10px;padding:9px 12px;font-weight:700}
+.report-body{line-height:1.8;white-space:pre-wrap;font-size:14px;margin-top:14px;overflow-wrap:anywhere}
+.report-status{padding:13px;background:#fff8e8;border:1px solid #f1dfb2;border-radius:12px;color:#70551a;margin-top:14px;line-height:1.7}
+@media(min-width:650px){.wrap{padding:22px}.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.item{min-height:198px;padding:15px}.item h3{font-size:16px}.item button{font-size:13px}.quickrow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:360px){.wrap{padding:10px}.grid{gap:8px}.item{padding:11px;min-height:185px}.item h3{font-size:14px}.item button{font-size:11px}.hero{padding:17px}.bigicon{font-size:36px}}
+</style></head>
+<body><main class="wrap">
+<header class="hero">
+  <div class="hero-top">
+    <div><h1>আমার বাজারদর</h1><p>প্রয়োজনীয় পণ্যের আন্তর্জাতিক, বাংলাদেশ ও খাতুনগঞ্জের বাজার এক জায়গায়</p></div>
+    <div class="bigicon">📊</div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>১১+</b><span>পণ্য ও বাজার</span></div>
+    <div class="stat"><b>২ ধরন</b><span>সংক্ষিপ্ত ও বিস্তারিত</span></div>
+    <div class="stat"><b>দৈনিক</b><span>তথ্য যাচাই</span></div>
+  </div>
+</header>
+
+<div class="searchbar"><span>🔎</span><input id="productSearch" type="search" placeholder="পণ্যের নাম লিখে খুঁজুন — যেমন কানাডা গম, এলাচি, সোনা" oninput="filterProducts()"></div>
+
+<div class="quickrow">
+  <button class="quickbtn" onclick="askDollar()">💵 আজকের ডলার রেট<small>ব্যাংক ও খোলাবাজার আলাদা</small></button>
+  <button class="quickbtn goldbtn" onclick="askQuick('সোনা','আন্তর্জাতিক স্বর্ণের স্পট মূল্য এবং বাংলাদেশে ২২/২১/১৮ ক্যারেটের বাজারদর')">🥇 আজকের সোনার দর<small>আন্তর্জাতিক ও বাংলাদেশি দর</small></button>
+</div>
+
+<div class="notice">প্রতিটি পণ্যে প্রথমে <b>একনজরে বাজারদর</b> অথবা <b>বিস্তারিত বিশ্লেষণ</b> বেছে নিন। একটি পণ্যে ক্লিক করলে শুধু সেই পণ্যের তথ্যই দেখাবে। যাচাই করা দর না পাওয়া গেলে অনুমান করে দেখানো হবে না।</div>
+
+<div class="section-head"><h2>🌾 গম ও শস্যজাত পণ্য</h2><small>২টি পণ্য</small></div>
+<section class="grid product-grid">
+<article class="item wheat" data-name="কানাডা গম" data-category="গম"><div class="item-top"><div class="emoji">🌾</div><span class="tag">গম</span></div><h3>কানাডা গম</h3><div class="hint">আন্তর্জাতিক · বাংলাদেশ · খাতুনগঞ্জ</div><button onclick="askQuick('কানাডা গম','আন্তর্জাতিক বাজার ও বাংলাদেশ/খাতুনগঞ্জের বুকিং দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('কানাডা গম','আন্তর্জাতিক বাজার ও বাংলাদেশ/খাতুনগঞ্জের বুকিং দর')">বিস্তারিত বিশ্লেষণ</button></article>
+<article class="item wheat" data-name="রাশিয়া গম" data-category="গম"><div class="item-top"><div class="emoji">🌾</div><span class="tag">গম</span></div><h3>রাশিয়া গম</h3><div class="hint">আন্তর্জাতিক · বাংলাদেশ · খাতুনগঞ্জ</div><button onclick="askQuick('রাশিয়া গম','আন্তর্জাতিক বাজার ও বাংলাদেশ/খাতুনগঞ্জের বুকিং দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('রাশিয়া গম','আন্তর্জাতিক বাজার ও বাংলাদেশ/খাতুনগঞ্জের বুকিং দর')">বিস্তারিত বিশ্লেষণ</button></article>
+</section>
+
+<div class="section-head"><h2>🛢️ ভোজ্যতেল</h2><small>২টি পণ্য</small></div>
+<section class="grid product-grid">
+<article class="item oil" data-name="খোলা সয়াবিন তেল" data-category="তেল"><div class="item-top"><div class="emoji">🛢️</div><span class="tag">তেল</span></div><h3>খোলা সয়াবিন তেল</h3><div class="hint">আন্তর্জাতিক · বাংলাদেশ · খাতুনগঞ্জ</div><button onclick="askQuick('খোলা সয়াবিন তেল','আন্তর্জাতিক ও বাংলাদেশ/খাতুনগঞ্জের পাইকারি ও বুকিং দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('খোলা সয়াবিন তেল','আন্তর্জাতিক ও বাংলাদেশ/খাতুনগঞ্জের পাইকারি ও বুকিং দর')">বিস্তারিত বিশ্লেষণ</button></article>
+<article class="item oil" data-name="খোলা পাম অয়েল" data-category="তেল"><div class="item-top"><div class="emoji">🌴</div><span class="tag">তেল</span></div><h3>খোলা পাম অয়েল</h3><div class="hint">আন্তর্জাতিক · বাংলাদেশ · খাতুনগঞ্জ</div><button onclick="askQuick('খোলা পাম অয়েল','আন্তর্জাতিক ও বাংলাদেশ/খাতুনগঞ্জের পাইকারি ও বুকিং দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('খোলা পাম অয়েল','আন্তর্জাতিক ও বাংলাদেশ/খাতুনগঞ্জের পাইকারি ও বুকিং দর')">বিস্তারিত বিশ্লেষণ</button></article>
+</section>
+
+<div class="section-head"><h2>🌿 চিনি ও মসলা</h2><small>২টি পণ্য</small></div>
+<section class="grid product-grid">
+<article class="item spice" data-name="চিনি" data-category="মসলা"><div class="item-top"><div class="emoji">🍬</div><span class="tag">চিনি</span></div><h3>চিনি</h3><div class="hint">আন্তর্জাতিক · বাংলাদেশ · খাতুনগঞ্জ</div><button onclick="askQuick('চিনি','আন্তর্জাতিক ও বাংলাদেশ/খাতুনগঞ্জের পাইকারি ও বুকিং দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('চিনি','আন্তর্জাতিক ও বাংলাদেশ/খাতুনগঞ্জের পাইকারি ও বুকিং দর')">বিস্তারিত বিশ্লেষণ</button></article>
+<article class="item spice" data-name="ছোট এলাচি" data-category="মসলা"><div class="item-top"><div class="emoji">🌿</div><span class="tag">মসলা</span></div><h3>ছোট এলাচি</h3><div class="hint">ভারতীয় · আন্তর্জাতিক · খাতুনগঞ্জ</div><button onclick="askQuick('ছোট এলাচি','ভারতীয়, আন্তর্জাতিক ও চট্টগ্রাম খাতুনগঞ্জের বুকিং/DO/স্লিপ দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('ছোট এলাচি','ভারতীয়, আন্তর্জাতিক ও চট্টগ্রাম খাতুনগঞ্জের বুকিং/DO/স্লিপ দর')">বিস্তারিত বিশ্লেষণ</button></article>
+</section>
+
+<div class="section-head"><h2>🍚 চালের বাজার</h2><small>৪টি পণ্য</small></div>
+<section class="grid product-grid">
+<article class="item rice" data-name="চিনিগুঁড়া চাল" data-category="চাল"><div class="item-top"><div class="emoji">🍚</div><span class="tag">চাল</span></div><h3>চিনিগুঁড়া চাল</h3><div class="hint">বাংলাদেশ · খাতুনগঞ্জ পাইকারি</div><button onclick="askQuick('চিনিগুঁড়া চাল','বাংলাদেশ ও খাতুনগঞ্জের পাইকারি দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('চিনিগুঁড়া চাল','বাংলাদেশ ও খাতুনগঞ্জের পাইকারি দর')">বিস্তারিত বিশ্লেষণ</button></article>
+<article class="item rice" data-name="কাটারি সিদ্ধ চাল" data-category="চাল"><div class="item-top"><div class="emoji">🍚</div><span class="tag">চাল</span></div><h3>কাটারি সিদ্ধ চাল</h3><div class="hint">বাংলাদেশ · খাতুনগঞ্জ পাইকারি</div><button onclick="askQuick('কাটারি সিদ্ধ চাল','বাংলাদেশ ও খাতুনগঞ্জের পাইকারি দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('কাটারি সিদ্ধ চাল','বাংলাদেশ ও খাতুনগঞ্জের পাইকারি দর')">বিস্তারিত বিশ্লেষণ</button></article>
+<article class="item rice" data-name="কাটারি আতপ চাল" data-category="চাল"><div class="item-top"><div class="emoji">🍚</div><span class="tag">চাল</span></div><h3>কাটারি আতপ চাল</h3><div class="hint">বাংলাদেশ · খাতুনগঞ্জ পাইকারি</div><button onclick="askQuick('কাটারি আতপ চাল','বাংলাদেশ ও খাতুনগঞ্জের পাইকারি দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('কাটারি আতপ চাল','বাংলাদেশ ও খাতুনগঞ্জের পাইকারি দর')">বিস্তারিত বিশ্লেষণ</button></article>
+<article class="item rice" data-name="মোটা সিদ্ধ চাল" data-category="চাল"><div class="item-top"><div class="emoji">🍚</div><span class="tag">চাল</span></div><h3>মোটা সিদ্ধ চাল</h3><div class="hint">বাংলাদেশ · খাতুনগঞ্জ পাইকারি</div><button onclick="askQuick('মোটা সিদ্ধ চাল','বাংলাদেশ ও খাতুনগঞ্জের পাইকারি দর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('মোটা সিদ্ধ চাল','বাংলাদেশ ও খাতুনগঞ্জের পাইকারি দর')">বিস্তারিত বিশ্লেষণ</button></article>
+</section>
+
+<div class="section-head"><h2>🥇 মূল্যবান ধাতু</h2><small>১টি পণ্য</small></div>
+<section class="grid product-grid">
+<article class="item gold" data-name="সোনা" data-category="ধাতু"><div class="item-top"><div class="emoji">🥇</div><span class="tag">সোনা</span></div><h3>সোনা</h3><div class="hint">আন্তর্জাতিক স্পট · বাংলাদেশি ২২/২১/১৮ ক্যারেট</div><button onclick="askQuick('সোনা','আন্তর্জাতিক স্বর্ণের স্পট মূল্য এবং বাংলাদেশে ২২/২১/১৮ ক্যারেটের বাজারদর')">একনজরে বাজারদর</button><button class="secondary" onclick="askDetailed('সোনা','আন্তর্জাতিক স্বর্ণের স্পট মূল্য এবং বাংলাদেশে ২২/২১/১৮ ক্যারেটের বাজারদর')">বিস্তারিত বিশ্লেষণ</button></article>
+</section>
+<div id="noProducts" class="empty">এই নামে কোনো পণ্য পাওয়া যায়নি।</div>
+
+<section class="features"><h2>প্রতিটি রিপোর্টে কী থাকবে?</h2><ul><li>সর্বশেষ আন্তর্জাতিক ও বাংলাদেশি বাজারদর</li><li>খাতুনগঞ্জের বুকিং, DO ও স্লিপ দর—যাচাই করা গেলে</li><li>দৈনিক, ৭ দিন ও ৩০ দিনের দর পরিবর্তন</li><li>আগামী ৩ মাসের সম্ভাব্য দর ও বাজার পরিস্থিতি</li><li>দাম বাড়া-কমার কারণ, ঝুঁকি ও আস্থার মাত্রা</li><li>তথ্যের উৎস, প্রকাশের তারিখ ও হালনাগাদের সময়</li></ul></section>
+<footer class="foot">আমার বাজারদর · এক জায়গায় প্রয়োজনীয় পণ্যের বাজারদর ও বিশ্লেষণ<br>দর যাচাইযোগ্য উৎস থেকে না পাওয়া গেলে অনুমান করে দেখানো হবে না।</footer>
+</main>
+<div id="reportPanel" class="report-panel" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+  <div class="report-inner">
+    <div class="report-head">
+      <h2 id="reportTitle">বাজারদর</h2>
+      <button class="report-close" onclick="closeReport()">বন্ধ করুন ✕</button>
+    </div>
+    <div id="reportBody" class="report-body"></div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script>
+
+
+// একই সার্ভারে HTML ও API চালালে এই ঠিকানাই ব্যবহার হবে।
+// অন্য ডোমেইনে API চালালে নিচের মানটি সম্পূর্ণ API URL দিয়ে বদলাবেন।
+const MARKET_API_BASE = '/api';
+function openReport(title, body, status=''){
+  document.getElementById('reportTitle').textContent=title;
+  const el=document.getElementById('reportBody');
+  el.innerHTML='';
+  if(status){
+    const s=document.createElement('div'); s.className='report-status'; s.textContent=status; el.appendChild(s);
+  }
+  if(body){
+    const content=document.createElement('div'); content.textContent=body; el.appendChild(content);
+  }
+  document.getElementById('reportPanel').style.display='block';
+  document.body.style.overflow='hidden';
+}
+function closeReport(){
+  document.getElementById('reportPanel').style.display='none';
+  document.body.style.overflow='';
+}
+async function requestMarketData(title, params){
+  openReport(title,'','তথ্য আনার চেষ্টা চলছে…');
+  try{
+    const url=MARKET_API_BASE + (params.type==='dollar' ? '/dollar' : '/market')
+      + '?' + new URLSearchParams(params).toString();
+    const response=await fetch(url,{headers:{'Accept':'application/json'}});
+    if(!response.ok) {
+      let detail='';
+      try { const problem=await response.json(); detail=problem.message || problem.error || ''; } catch(e) {}
+      throw new Error('সার্ভার থেকে তথ্য পাওয়া যায়নি (HTTP '+response.status+')'+(detail?' — '+detail:''));
+    }
+    const data=await response.json();
+    const body=document.getElementById('reportBody');
+    body.innerHTML='';
+    if(data.updated_at){
+      const stamp=document.createElement('p'); stamp.textContent='হালনাগাদ: '+data.updated_at; body.appendChild(stamp);
+    }
+    if(data.source){
+      const source=document.createElement('p'); source.textContent='উৎস: '+data.source; body.appendChild(source);
+    }
+    const content=document.createElement('pre');
+    content.style.whiteSpace='pre-wrap'; content.style.fontFamily='inherit';
+    content.textContent=data.report || data.message || 'সার্ভার কোনো প্রতিবেদন দেয়নি।';
+    body.appendChild(content);
+  }catch(error){
+    openReport(title,'',
+      'অনলাইন সার্ভার থেকে তথ্য আনা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।\\n\\nপ্রযুক্তিগত তথ্য: '+error.message);
+  }
+}
+function askQuick(product,market){
+  requestMarketData(product+' — একনজরে বাজারদর',
+    {type:'market',product:product,market:market,view:'summary'});
+}
+function askDetailed(product,market){
+  requestMarketData(product+' — বিস্তারিত বিশ্লেষণ',
+    {type:'market',product:product,market:market,view:'detailed'});
+}
+function askDollar(){
+  requestMarketData('আজকের ডলার রেট',
+    {type:'dollar',view:'summary'});
+}
+function filterProducts(){
+  const q=(document.getElementById('productSearch').value||'').trim().toLowerCase();
+  let shown=0;
+  document.querySelectorAll('.product-grid .item').forEach(card=>{
+    const match=(card.dataset.name||'').toLowerCase().includes(q);
+    card.style.display=match?'flex':'none';
+    if(match) shown++;
+  });
+  document.getElementById('noProducts').style.display=shown?'none':'block';
+}
+function showToast(t){const e=document.getElementById('toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',4000)}
+</script></body></html>
